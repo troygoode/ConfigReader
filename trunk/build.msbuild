@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="build_release">
+    <MSBuild Projects="src\app\ConfigReader\ConfigReader.csproj" Properties="Configuration=Release;"/>
+    <RemoveDir Directories="Output"/>
+    <MakeDir Directories="Output"/>
+    <Exec Command="tools\ILMerge\ILMerge.exe /log /lib:src\app\ConfigReader\bin\Release /internalize /out:Output\ConfigReader.dll ConfigReader.dll Castle.Components.DictionaryAdapter.dll" />
+  </Target>
+
+
+</Project>
