@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 
 namespace ConfigReader.Tests
@@ -7,5 +8,6 @@ namespace ConfigReader.Tests
         string StringProperty { get; }
         int IntegerProperty { get; }
         Color ColorProperty { get; }
+        Uri AddressProperty { get; }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using NUnit.Framework;
@@ -51,6 +52,11 @@ namespace ConfigReader.Tests
             public Color ColorProperty
             {
                 get { return Color.DimGray; }
+            }
+
+            public Uri AddressProperty
+            {
+                get { return null; }
             }
         }
     }

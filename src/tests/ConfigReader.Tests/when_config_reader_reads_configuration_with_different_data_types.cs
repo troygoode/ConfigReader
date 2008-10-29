@@ -22,7 +22,8 @@ namespace ConfigReader.Tests
                         {"ConfigurationAdapter2.StringProperty", "2prop1"},
                         {"ConfigurationAdapter1.IntegerProperty", 2.ToString()},
                         {"ConfigurationAdapter1.StringProperty", "1prop1"},
-                        {"ConfigurationAdapter1.ColorProperty", "#FFFFFF"}
+                        {"ConfigurationAdapter1.ColorProperty", "#FFFFFF"},
+                        {"ConfigurationAdapter1.AddressProperty", "http://localhost"}
                     };
 
             SetupResult.For(this.configSource.GetConfigDictionary()).Return(configDictionaryToReturn);
@@ -49,6 +50,7 @@ namespace ConfigReader.Tests
             Assert.AreEqual("1prop1", configurationAdapter1.StringProperty);
             Assert.AreEqual(2, configurationAdapter1.IntegerProperty);
             Assert.AreEqual(Color.White, configurationAdapter1.ColorProperty);
+            Assert.AreEqual(new Uri("http://localhost"), configurationAdapter1.AddressProperty);
         }
     }
 }

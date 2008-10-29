@@ -32,7 +32,7 @@ namespace ConfigReader
                 var propertyInfo = propertiesOfType[name];
                 object value;
 
-                if (propertyInfo.PropertyType.IsAssignableFrom(pair.Value.GetType()))
+                if (pair.Value == null || propertyInfo.PropertyType.IsAssignableFrom(pair.Value.GetType()))
                 {
                     value = pair.Value;
                 }
