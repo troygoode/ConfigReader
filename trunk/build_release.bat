@@ -1,1 +1,0 @@
-%WinDir%\Microsoft.NET\Framework\v3.5\msbuild.exe build.msbuild /target:build_release
