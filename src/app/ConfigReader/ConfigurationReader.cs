@@ -60,13 +60,13 @@ namespace ConfigReader
             return this;
         }
 
-        public ConfigurationReader SetupConfigOf<T>(T defaultValues)
+        public ConfigurationReader SetupConfigOf<T>(object defaultValues)
         {
-            FillConfigTypesWithDefaultValues(defaultValues);
+            FillConfigTypesWithDefaultValues<T>(defaultValues);
             return SetupConfigOf<T>();
         }
 
-        private void FillConfigTypesWithDefaultValues<T>(T defaultValues)
+        private void FillConfigTypesWithDefaultValues<T>(object defaultValues)
         {
             var configType = typeof (T);
 
@@ -79,16 +79,41 @@ namespace ConfigReader
             {
                 var propertyName = propertyInfo.Name;
 
-                if(!configurationForT.Contains(propertyName))
+                if (!configurationForT.Contains(propertyName))
                 {
-                    configurationForT.Add(
-                        new ConfigProperty
-                            {
-                                Name = propertyName,
-                                Value = configType.GetProperty(propertyName).GetValue(defaultValues, null)
-                            });
+                    ConfigProperty configProperty;
+                    try
+                    {
+                        configProperty = new ConfigProperty
+                                             {
+                                                 Name = propertyName,
+                                                 Value =
+                                                     defaultValues.GetType().GetProperty(propertyName).GetValue(
+                                                     defaultValues, null)
+                                             };
+                    }
+                    catch (NullReferenceException)
+                    {
+                        throw new ConfigurationException(
+                            String.Format("The default values object misses the property named '{0}' of type '{1}'.",
+                                          propertyName, propertyInfo.PropertyType.FullName));
+                    }
+
+                    if (configProperty.Value != null &&
+                        !propertyInfo.PropertyType.IsAssignableFrom(configProperty.Value.GetType()))
+                        throw new ConfigurationException(
+                            String.Format("The default values object misses the property named '{0}' of type '{1}'.",
+                                          propertyName, propertyInfo.PropertyType.FullName));
+
+
+                    configurationForT.Add(configProperty);
                 }
             }
+        }
+
+        private void ValidateConfiguration()
+        {
+            
         }
 
         public IConfigurationBrowser ConfigBrowser
