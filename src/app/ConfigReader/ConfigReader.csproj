@@ -49,6 +49,7 @@
     <Compile Include="ConfigurationException.cs" />
     <Compile Include="ConfigurationReader.cs" />
     <Compile Include="ConfigurationSources\AppConfigSource.cs" />
+    <Compile Include="ConfigurationSources\MappedAppConfigSource.cs" />
     <Compile Include="DefaultConfigurationBrowser.cs" />
     <Compile Include="ConfigNameParts\ConfigProperty.cs" />
     <Compile Include="ConfigNameParts\ConfigType.cs" />

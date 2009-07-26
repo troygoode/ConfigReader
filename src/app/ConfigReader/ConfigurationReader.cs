@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Reflection;
 using Castle.Components.DictionaryAdapter;
 using ConfigReader.ConfigNameParts;
@@ -14,7 +13,8 @@ namespace ConfigReader
         private readonly IConfigurationSource configurationSource;
         private readonly DictionaryAdapterFactory dictionaryAdapterFactory = new DictionaryAdapterFactory();
         private readonly DefaultConfigurationBrowser configBrowser = new DefaultConfigurationBrowser();
-        private ConfigTypesCollection configTypes; 
+        private ConfigTypesCollection configTypes;
+        private Dictionary<Type, Func<string, object>> customConvertions;
 
         /// <summary>
         /// Creates the ConfigurationReader based on the Application Configuration file.
@@ -49,7 +49,7 @@ namespace ConfigReader
 
             var configurationForT = config.Properties.GetValuesDictionary();
 
-            var configConverter = new ConfigConverter(typeof (T));
+            var configConverter = new ConfigConverter(typeof (T), CustomConvertions);
 
             var convertedConfiguration = configConverter.ConvertConfigProperties(configurationForT);
             
@@ -73,6 +73,10 @@ namespace ConfigReader
             var typePublicProperties = configType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty);
             
             var config = configTypes[configType.Name];
+            
+            if(config == null)
+                configTypes.Add(config = new ConfigType(configType.Name));
+
             var configurationForT = config.Properties;
 
             foreach (var propertyInfo in typePublicProperties)
@@ -121,6 +125,23 @@ namespace ConfigReader
             get
             {
                 return configBrowser;
+            }
+        }
+
+        public ConfigurationReader SetupCustomConverter<T>(Func<string, T> conversion)
+        {
+            CustomConvertions.Add(typeof (T), source => conversion(source) as object);
+            return this;
+        }
+
+        private Dictionary<Type, Func<string, object>> CustomConvertions
+        {
+            get
+            {
+                if(customConvertions == null)
+                    customConvertions = new Dictionary<Type, Func<string, object>>();
+
+                return customConvertions;
             }
         }
     }

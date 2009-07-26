@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace ConfigReader.ConfigNameParts
 {
@@ -32,7 +31,7 @@ namespace ConfigReader.ConfigNameParts
                 if (this.Contains(name.TrimStart('I')))
                     return base[name.TrimStart('I')];
 
-                throw new KeyNotFoundException(name + " could not be found.");
+                return null;
             }
         }
 
