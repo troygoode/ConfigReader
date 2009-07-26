@@ -8,7 +8,7 @@ using Rhino.Mocks;
 namespace ConfigReader.Tests
 {
     [TestFixture]
-    public class when_a_custom_convertion_strategy_is_set_for_a_type  : ConfigurationReaderSpecificationBase
+    public class when_a_custom_conversion_strategy_is_set_for_a_type  : ConfigurationReaderSpecificationBase
     {
         protected override void Context()
         {
@@ -17,8 +17,8 @@ namespace ConfigReader.Tests
             var configDictionaryToReturn =
                 new Dictionary<string, string>
                     {
-                        {"CustomConvertion.Address", "111.111.111.2"},
-                        {"CustomConvertion.StringArray", "value1;value2;value3"}
+                        {"CustomConversion.Address", "111.111.111.2"},
+                        {"CustomConversion.StringArray", "value1;value2;value3"}
                     };
 
             SetupResult.For(this.configSource.GetConfigDictionary()).Return(configDictionaryToReturn);
@@ -35,19 +35,19 @@ namespace ConfigReader.Tests
             configReader.
                 SetupCustomConverter(source => source.Split(';')).
                 SetupCustomConverter((string source) => IPAddress.Parse(source)).
-                SetupConfigOf<ICustomConvertion>();
+                SetupConfigOf<ICustomConversion>();
 
 
-            var array = configReader.ConfigBrowser.Get<ICustomConvertion>().StringArray;
+            var array = configReader.ConfigBrowser.Get<ICustomConversion>().StringArray;
             Assert.AreEqual(3, array.Count());
             Assert.AreEqual("value3", array.ElementAt(2));
 
-            var ipAddress = configReader.ConfigBrowser.Get<ICustomConvertion>().Address;
+            var ipAddress = configReader.ConfigBrowser.Get<ICustomConversion>().Address;
             Assert.IsNotNull(ipAddress);
             Assert.AreEqual("111.111.111.2", ipAddress.ToString());
         }
 
-        public interface ICustomConvertion
+        public interface ICustomConversion
         {
             IPAddress Address { get; }
             string[] StringArray { get; }

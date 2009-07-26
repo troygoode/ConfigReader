@@ -10,16 +10,16 @@ namespace ConfigReader
     internal class ConfigConverter
     {
         private readonly Type type;
-        private readonly Dictionary<Type, Func<string, object>> customConvertions;
+        private readonly Dictionary<Type, Func<string, object>> customConversions;
         private readonly Dictionary<string, PropertyInfo> propertiesOfType;
 
-        public ConfigConverter(Type type, Dictionary<Type, Func<string, object>> customConvertions)
+        public ConfigConverter(Type type, Dictionary<Type, Func<string, object>> customConversions)
         {
             if (type == null) 
                 throw new ArgumentNullException("type");
             
             this.type = type;
-            this.customConvertions = customConvertions;
+            this.customConversions = customConversions;
             propertiesOfType = type.GetProperties().ToDictionary(prop=>prop.Name);
         }
 
@@ -44,11 +44,11 @@ namespace ConfigReader
         {
             object value;
 
-            if (customConvertions != null && customConvertions.ContainsKey(propertyInfo.PropertyType) && pair.Value is string)
+            if (customConversions != null && customConversions.ContainsKey(propertyInfo.PropertyType) && pair.Value is string)
             {
                 try
                 {
-                    value = customConvertions[propertyInfo.PropertyType](pair.Value as string);
+                    value = customConversions[propertyInfo.PropertyType](pair.Value as string);
                 }
                 catch (Exception ex)
                 {

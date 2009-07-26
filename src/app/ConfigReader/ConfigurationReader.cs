@@ -14,7 +14,7 @@ namespace ConfigReader
         private readonly DictionaryAdapterFactory dictionaryAdapterFactory = new DictionaryAdapterFactory();
         private readonly DefaultConfigurationBrowser configBrowser = new DefaultConfigurationBrowser();
         private ConfigTypesCollection configTypes;
-        private Dictionary<Type, Func<string, object>> customConvertions;
+        private Dictionary<Type, Func<string, object>> customConversions;
 
         /// <summary>
         /// Creates the ConfigurationReader based on the Application Configuration file.
@@ -49,7 +49,7 @@ namespace ConfigReader
 
             var configurationForT = config.Properties.GetValuesDictionary();
 
-            var configConverter = new ConfigConverter(typeof (T), CustomConvertions);
+            var configConverter = new ConfigConverter(typeof (T), CustomConversions);
 
             var convertedConfiguration = configConverter.ConvertConfigProperties(configurationForT);
             
@@ -130,18 +130,18 @@ namespace ConfigReader
 
         public ConfigurationReader SetupCustomConverter<T>(Func<string, T> conversion)
         {
-            CustomConvertions.Add(typeof (T), source => conversion(source) as object);
+            CustomConversions.Add(typeof (T), source => conversion(source) as object);
             return this;
         }
 
-        private Dictionary<Type, Func<string, object>> CustomConvertions
+        private Dictionary<Type, Func<string, object>> CustomConversions
         {
             get
             {
-                if(customConvertions == null)
-                    customConvertions = new Dictionary<Type, Func<string, object>>();
+                if(customConversions == null)
+                    customConversions = new Dictionary<Type, Func<string, object>>();
 
-                return customConvertions;
+                return customConversions;
             }
         }
     }
