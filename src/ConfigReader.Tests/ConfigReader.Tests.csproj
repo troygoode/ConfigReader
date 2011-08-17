@@ -85,7 +85,7 @@
     <Compile Include="when_the_config_reader_get_default_vaules.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\app\ConfigReader\ConfigReader.csproj">
+    <ProjectReference Include="..\ConfigReader\ConfigReader.csproj">
       <Project>{49334784-9B6B-479F-9DCD-3B33D0AA8B8E}</Project>
       <Name>ConfigReader</Name>
     </ProjectReference>
