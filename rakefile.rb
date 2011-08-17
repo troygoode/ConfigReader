@@ -13,15 +13,15 @@ assemblyinfo :generate_assemblyInfo do |asm|
   asm.description = ""
   asm.copyright = "Apache License, Version 2.0"
   asm.custom_attributes \
-	:CLSCompliant => true,
-	:ComVisible => false,
-	:Guid => "4622b561-de80-4f3f-9869-50647c33d779",
-	:AllowPartiallyTrustedCallers => nil,
-	:AssemblyFileVersion => version,
-	:AssemblyConfiguration => '',
-	:AssemblyTrademark => '',
-	:AssemblyCulture => '',
-	:InternalsVisibleTo => 'ConfigReader.Tests'
+    :CLSCompliant => true,
+    :ComVisible => false,
+    :Guid => "4622b561-de80-4f3f-9869-50647c33d779",
+    #:AllowPartiallyTrustedCallers => nil,
+    :AssemblyFileVersion => version,
+    :AssemblyConfiguration => '',
+    :AssemblyTrademark => '',
+    :AssemblyCulture => '',
+    :InternalsVisibleTo => 'ConfigReader.Tests'
   asm.namespaces "System", "System.Security", "System.Runtime.CompilerServices"
   asm.output_file = "src/ConfigReader/Properties/AssemblyInfo.cs"
 end
@@ -39,14 +39,14 @@ msbuild :release_build do |msb|
 end
 
 exec :release => :release_build do |cmd|
-  cmd.command = 'tools\ILMerge\ILMerge.exe'
+  cmd.command = 'tools\ILMerge-2.11\ILMerge.exe'
   cmd.parameters [
-  	'/log',
-  	'/lib:src\ConfigReader\bin\Release',
-  	'/internalize',
-  	'/out:Output\ConfigReader.dll',
-  	'ConfigReader.dll',
-  	'Castle.Components.DictionaryAdapter.dll'
+    '/log',
+    '/lib:src\ConfigReader\bin\Release',
+    '/internalize',
+    '/out:Output\ConfigReader.dll',
+    'ConfigReader.dll',
+    'Castle.Components.DictionaryAdapter.dll'
   ]
 end
 
