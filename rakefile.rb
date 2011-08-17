@@ -23,13 +23,31 @@ assemblyinfo :generate_assemblyInfo do |asm|
 	:AssemblyCulture => '',
 	:InternalsVisibleTo => 'ConfigReader.Tests'
   asm.namespaces "System", "System.Security", "System.Runtime.CompilerServices"
-  asm.output_file = "src/app/ConfigReader/Properties/AssemblyInfo.cs"
+  asm.output_file = "src/ConfigReader/Properties/AssemblyInfo.cs"
 end
 
 msbuild :build => [:generate_assemblyInfo] do |msb|
   msb.properties :configuration => :Debug
   msb.targets :Clean, :Rebuild
-  msb.solution = "ConfigReader.sln"
+  msb.solution = "src/ConfigReader.sln"
+end
+
+msbuild :release_build do |msb|
+  msb.properties :configuration => :Release
+  msb.targets :Clean, :Rebuild
+  msb.solution = "src/ConfigReader.sln"
+end
+
+exec :release => :release_build do |cmd|
+  cmd.command = 'tools\ILMerge\ILMerge.exe'
+  cmd.parameters [
+  	'/log',
+  	'/lib:src\ConfigReader\bin\Release',
+  	'/internalize',
+  	'/out:Output\ConfigReader.dll',
+  	'ConfigReader.dll',
+  	'Castle.Components.DictionaryAdapter.dll'
+  ]
 end
 
 #TODO: test
@@ -38,7 +56,6 @@ end
 #	nunit.assemblies "assemblies/TestSolution.Tests.dll"
 #end
 
-#TODO: do release build
 #TODO: ILMerge dependency on Castle.DictionaryAdapter
 #TODO: generate NuSpec
 #TODO: package to .nupkg
