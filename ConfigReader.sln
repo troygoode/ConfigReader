@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigReader", "src\app\ConfigReader\ConfigReader.csproj", "{49334784-9B6B-479F-9DCD-3B33D0AA8B8E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigReader.Tests", "src\tests\ConfigReader.Tests\ConfigReader.Tests.csproj", "{623A59F3-4D70-4A39-B60A-C727622C0F74}"
