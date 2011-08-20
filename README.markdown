@@ -36,6 +36,12 @@ Supply defaults from `DefaultMailNotificationSettings` to ConfigReader.
 
     IMailNotificationSettings mailNotificationSettings = configReader.ConfigBrowser.Get<IMailNotificationSettings>(new DefaultMailNotificationSettings());
 
+The `mailNotificationSettings` now contains an instance implementing `IMailNotificationSettings` with defaults from `DefaultMailNotificationSettings`:
+
+    Assert.Equal("http://localhost", mailNotificationSettings.SmtpServerAddress);
+    Assert.Equal("", mailNotificationSettings.Username);
+    Assert.Equal("", mailNotificationSettings.Password);
+
 ## Step Five (Optional): Override Default Settings via App.config/Web.config
 
     <?xml version="1.0" encoding="utf-8" ?>
@@ -46,7 +52,11 @@ Supply defaults from `DefaultMailNotificationSettings` to ConfigReader.
       </appSettings>
     </configuration>
 
-In the above example `Username` and `Password` are overriden, but the default value for `SmtpServerAddress` remains.
+Using the above config file, `Username` and `Password` are overriden, but the default value for `SmtpServerAddress` remains:
+
+    Assert.Equal("http://localhost", mailNotificationSettings.SmtpServerAddress);
+    Assert.Equal("user123", mailNotificationSettings.Username);
+    Assert.Equal("passwd123", mailNotificationSettings.Password);
 
 # License
 
