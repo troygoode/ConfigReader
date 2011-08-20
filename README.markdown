@@ -4,11 +4,11 @@ Type-safe, convention-over-configuration access to the .Net application configur
 
 # How do I use it?
 
-## Step One: Install the Library
+### Step One: Install the Library
 
 Install ["ConfigReader"](http://nuget.org/List/Packages/ConfigReader) via [NuGet](http://nuget.org) via the GUI or "Install-Package ConfigReader".
 
-## Step Two: Create the Interface & Default-Supplying Class
+### Step Two: Create the Interface & Default-Supplying Class
 
 Create an interface representing your configuration object.
 
@@ -26,7 +26,7 @@ Create a class that implements the above interface that supplies the defaults fo
         public string Password { get { return string.Empty; } }     
     }
 
-## Step Four: Retrieve Instance of IMailNotificationSettings With Defaults From DefaultMailNotificationSettings
+### Step Three: Retrieve Instance of IMailNotificationSettings With Defaults From DefaultMailNotificationSettings
 
 Instantiate an instance of `ConfigReader` and `SetupConfigFor<IYourInterface>`.
 
@@ -42,7 +42,7 @@ The `mySettings` now contains an instance implementing `IMailNotificationSetting
     Assert.Equal("", mySettings.Username);
     Assert.Equal("", mySettings.Password);
 
-## Step Five (Optional): Override Default Settings via App.config/Web.config
+### Step Four (Optional): Override Default Settings via App.config/Web.config
 
     <?xml version="1.0" encoding="utf-8" ?>
     <configuration>
