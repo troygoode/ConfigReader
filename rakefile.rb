@@ -16,7 +16,7 @@ assemblyinfo :generate_assemblyInfo do |asm|
     :ComVisible => false,
     :Guid => "4622b561-de80-4f3f-9869-50647c33d779",
     #:AllowPartiallyTrustedCallers => nil,
-    :AssemblyFileVersion => version,
+    :AssemblyFileVersion => VERSION,
     :AssemblyConfiguration => '',
     :AssemblyTrademark => '',
     :AssemblyCulture => '',
@@ -50,11 +50,10 @@ exec :release => :release_build do |cmd|
   ]
 end
 
-#TODO: test
-#nunit :test => [:build] do |nunit|
-#	nunit.command = "NUnit/nunit-console.exe"
-#	nunit.assemblies "assemblies/TestSolution.Tests.dll"
-#end
+nunit :test => [:build] do |nunit|
+  nunit.command = "src/packages/NUnit.2.5.10.11092/tools/nunit-console.exe"
+  nunit.assemblies "src/ConfigReader.Tests/bin/Debug/ConfigReader.Tests.dll"
+end
 
 #TODO: ILMerge dependency on Castle.DictionaryAdapter
 #TODO: generate NuSpec
