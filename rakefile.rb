@@ -44,6 +44,7 @@ exec :release => :release_build do |cmd|
     'Castle.Components.DictionaryAdapter.dll',
     '/lib:src\ConfigReader\bin\Release',
     '/out:output\ConfigReader.dll',
+    '/keyfile:src\ConfigReader\Key.snk',
     '/targetplatform:v4',
     '/internalize',
     '/log'

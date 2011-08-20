@@ -112,6 +112,7 @@ You can process these by registering your own custom type converters:
         .SetupConfigOf<ICustomConversionExample>();
     
     var mySettings = configReader.ConfigBrowser.Get<ICustomConversionExample>;
+
     Assert.False(mySettings.Address.IsIPv6LinkLocal);
     Assert.Equal(2, mySettings.AdminUsernames.Count);
     Assert.Equal("Reshef.Mann", mySettings.AdminUsernames[0]);
