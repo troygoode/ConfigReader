@@ -34,29 +34,29 @@ Instantiate an instance of `ConfigReader` and `SetupConfigFor<IYourInterface>`.
 
 Supply defaults from `DefaultMailNotificationSettings` to ConfigReader.
 
-    IMailNotificationSettings mailNotificationSettings = configReader.ConfigBrowser.Get<IMailNotificationSettings>(new DefaultMailNotificationSettings());
+    IMailNotificationSettings mySettings = configReader.ConfigBrowser.Get<IMailNotificationSettings>(new DefaultMailNotificationSettings());
 
 The `mailNotificationSettings` now contains an instance implementing `IMailNotificationSettings` with defaults from `DefaultMailNotificationSettings`:
 
-    Assert.Equal("http://localhost", mailNotificationSettings.SmtpServerAddress);
-    Assert.Equal("", mailNotificationSettings.Username);
-    Assert.Equal("", mailNotificationSettings.Password);
+    Assert.Equal("http://localhost", mySettings.SmtpServerAddress);
+    Assert.Equal("", mySettings.Username);
+    Assert.Equal("", mySettings.Password);
 
 ## Step Five (Optional): Override Default Settings via App.config/Web.config
 
     <?xml version="1.0" encoding="utf-8" ?>
     <configuration>
       <appSettings>
-        <add key="MailNotificationSettings.Username" value="user123"/>
-        <add key="MailNotificationSettings.Password" value="passwd123"/>
+        <add key="MailNotificationSettings.Username" value="user123" />
+        <add key="MailNotificationSettings.Password" value="passwd123" />
       </appSettings>
     </configuration>
 
 Using the above config file, `Username` and `Password` are overriden, but the default value for `SmtpServerAddress` remains:
 
-    Assert.Equal("http://localhost", mailNotificationSettings.SmtpServerAddress);
-    Assert.Equal("user123", mailNotificationSettings.Username);
-    Assert.Equal("passwd123", mailNotificationSettings.Password);
+    Assert.Equal("http://localhost", mySettings.SmtpServerAddress); // default
+    Assert.Equal("user123", mySettings.Username); // overridden from config!
+    Assert.Equal("passwd123", mySettings.Password); // overridden from config!
 
 # License
 
