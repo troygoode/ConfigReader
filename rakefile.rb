@@ -1,12 +1,11 @@
 require 'albacore' # >= 0.2.7
 require 'fileutils'
-
-version = '1.0'
+load './version.rb'
 
 task :default => [:build]
 
 assemblyinfo :generate_assemblyInfo do |asm|
-  asm.version = version
+  asm.version = VERSION
   asm.company_name = "Reshef Mann"
   asm.product_name = "ConfigReader"
   asm.title = "ConfigReader"
@@ -41,13 +40,13 @@ end
 exec :release => :release_build do |cmd|
   cmd.command = 'tools\ILMerge-2.11\ILMerge.exe'
   cmd.parameters [
-    '/log',
-    '/targetplatform:v4',
-    '/lib:src\ConfigReader\bin\Release',
-    '/internalize',
-    '/out:Output\ConfigReader.dll',
     'ConfigReader.dll',
-    'Castle.Components.DictionaryAdapter.dll'
+    'Castle.Components.DictionaryAdapter.dll',
+    '/lib:src\ConfigReader\bin\Release',
+    '/out:Output\ConfigReader.dll',
+    '/targetplatform:v4',
+    '/internalize',
+    '/log'
   ]
 end
 
