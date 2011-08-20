@@ -9,8 +9,8 @@ assemblyinfo :generate_assemblyInfo do |asm|
   asm.company_name = "Reshef Mann"
   asm.product_name = "ConfigReader"
   asm.title = "ConfigReader"
-  asm.description = ""
-  asm.copyright = "Apache License, Version 2.0"
+  asm.description = "Type-safe, convention-over-configuration access to the .Net application configuration, web.config, or other configuration source."
+  asm.copyright = "Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0.html)"
   asm.custom_attributes \
     :CLSCompliant => true,
     :ComVisible => false,
@@ -25,7 +25,7 @@ assemblyinfo :generate_assemblyInfo do |asm|
   asm.output_file = "src/ConfigReader/Properties/AssemblyInfo.cs"
 end
 
-msbuild :build => [:generate_assemblyInfo] do |msb|
+msbuild :build => :generate_assemblyInfo do |msb|
   msb.properties :configuration => :Debug
   msb.targets :Clean, :Rebuild
   msb.solution = "src/ConfigReader.sln"
@@ -43,19 +43,39 @@ exec :release => :release_build do |cmd|
     'ConfigReader.dll',
     'Castle.Components.DictionaryAdapter.dll',
     '/lib:src\ConfigReader\bin\Release',
-    '/out:Output\ConfigReader.dll',
+    '/out:output\ConfigReader.dll',
     '/targetplatform:v4',
     '/internalize',
     '/log'
   ]
 end
 
-nunit :test => [:build] do |nunit|
+nunit :test => :build do |nunit|
   nunit.command = "src/packages/NUnit.2.5.10.11092/tools/nunit-console.exe"
   nunit.assemblies "src/ConfigReader.Tests/bin/Debug/ConfigReader.Tests.dll"
 end
 
-#TODO: ILMerge dependency on Castle.DictionaryAdapter
-#TODO: generate NuSpec
-#TODO: package to .nupkg
-#TODO: push nupkg to nuget.org
+nuspec :generate_nuspec => [:test, :release] do |nuspec|
+  nuspec.title = "ConfigReader"
+  nuspec.id = "ConfigReader"
+  nuspec.version = VERSION
+  nuspec.authors = "Reshef Mann"
+  nuspec.owners = "TroyGoode"
+  nuspec.description = "Type-safe, convention-over-configuration access to the .Net application configuration, web.config, or other configuration source."
+  nuspec.language = "en-US"
+  nuspec.licenseUrl = "http://www.apache.org/licenses/LICENSE-2.0.html"
+  nuspec.projectUrl = "http://github.com/TroyGoode/ConfigReader"
+  nuspec.tags = "configuration config conventions defaults"
+  nuspec.file "ConfigReader.dll", "lib/net40"
+  nuspec.file "ConfigReader.pdb", "lib/net40"
+  nuspec.output_file = "./output/ConfigReader.nuspec"
+end
+
+nugetpack :package => :generate_nuspec do |nuget|
+  nuget.nuspec = './output/ConfigReader.nuspec'
+  nuget.output = './output/'
+end
+
+nugetpush :push => :package do |nuget|
+  nuget.package = "./output/ConfigReader.#{VERSION}.nupkg"
+end

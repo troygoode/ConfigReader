@@ -4,10 +4,10 @@ using System.Runtime.CompilerServices;
 using System.Reflection;
 using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ConfigReader")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Type-safe, convention-over-configuration access to the .Net application configuration, web.config, or other configuration source.")]
 [assembly: AssemblyCompany("Reshef Mann")]
 [assembly: AssemblyProduct("ConfigReader")]
-[assembly: AssemblyCopyright("Apache License, Version 2.0")]
+[assembly: AssemblyCopyright("Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0.html)")]
 [assembly: AssemblyVersion("1.0")]
 
 [assembly: CLSCompliant(true)]
