@@ -42,6 +42,7 @@ exec :release => :release_build do |cmd|
   cmd.command = 'tools\ILMerge-2.11\ILMerge.exe'
   cmd.parameters [
     '/log',
+    '/targetplatform:v4',
     '/lib:src\ConfigReader\bin\Release',
     '/internalize',
     '/out:Output\ConfigReader.dll',
