@@ -12,7 +12,6 @@ Install ["ConfigReader"](http://nuget.org/List/Packages/ConfigReader) via [NuGet
 
 Create an interface representing your configuration object.
 
-**IMailNotificationSettings.cs**
     public interface IMailNotificationSettings{
         Uri SmtpServerAddress { get; }
         string Username { get; }
@@ -21,7 +20,6 @@ Create an interface representing your configuration object.
 
 Create a class that implements the above interface that supplies the defaults for the configuration.
 
-**DefaultMailNotificationSettings.cs**
     public class DefaultMailNotificationSettings : IMailNotificationSettings{
         public Uri SmtpServerAddress { get { return new Uri("http://localhost"); } }
         public string Username { get { return string.Empty; } }
