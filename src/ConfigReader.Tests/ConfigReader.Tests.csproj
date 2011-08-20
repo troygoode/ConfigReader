@@ -52,6 +52,12 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>TestKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -86,16 +92,12 @@
     <Compile Include="when_the_config_reader_get_default_vaules.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ConfigReader\ConfigReader.csproj">
-      <Project>{49334784-9B6B-479F-9DCD-3B33D0AA8B8E}</Project>
-      <Name>ConfigReader</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="mappedConfig.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="TestKey.pub" />
+    <None Include="TestKey.snk" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -113,6 +115,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ConfigReader\ConfigReader.csproj">
+      <Project>{49334784-9B6B-479F-9DCD-3B33D0AA8B8E}</Project>
+      <Name>ConfigReader</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -20,7 +20,7 @@ assemblyinfo :generate_assemblyInfo do |asm|
     :AssemblyConfiguration => '',
     :AssemblyTrademark => '',
     :AssemblyCulture => '',
-    :InternalsVisibleTo => 'ConfigReader.Tests'
+    :InternalsVisibleTo => 'ConfigReader.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100a530732931867ea26331e8756ee235dc44d74dba33d4bc0c79d4a2363a3970de876605ff3e536065993d6fa7f69ae3c08d96dea44ff53098ef1db45e7a22c7469a30bab6e9566c6edaccaec2d5e871c54f7d5b8ea0ace6a85876ec19c84e9416419726ac44f9e268fbabd4f265d563c0aa251936a334e6431ed0dcc600577385'
   asm.namespaces "System", "System.Security", "System.Runtime.CompilerServices"
   asm.output_file = "src/ConfigReader/Properties/AssemblyInfo.cs"
 end
@@ -31,7 +31,7 @@ msbuild :build => :generate_assemblyInfo do |msb|
   msb.solution = "src/ConfigReader.sln"
 end
 
-msbuild :release_build do |msb|
+msbuild :release_build => :generate_assemblyInfo do |msb|
   msb.properties :configuration => :Release
   msb.targets :Clean, :Rebuild
   msb.solution = "src/ConfigReader.sln"
